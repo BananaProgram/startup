@@ -54,7 +54,7 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
+- **HTML** - 3 HTML pages: login, dino enclosure, and shop. Hyperlinks to view friends' enclosures.
 - **CSS** - Description here
 - **React** - Description here
 - **Service** - Description here
