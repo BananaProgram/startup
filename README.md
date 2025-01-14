@@ -27,7 +27,7 @@ I read through the Markdown page linked in the instructions and now I should kno
 
 ### Elevator pitch
 
-It is a sad truth that it is currently quite impossible to obtain a pet dinosaur. Don't fret! Introducing: Dino Pals, a way to befriend and take care of your very own ancient reptiles.
+It is a sad truth that it is currently quite impossible to obtain a pet dinosaur. Don't fret! Introducing: Dino Pals, a way to befriend and take care of your very own ancient reptiles. Whether you want to raise your favorite dinosaur all on your own or show off your adorably terrifying collection to your friends, Dino Pals is the webapp for you. Come hatch your first egg today!
 
 ### Design
 
