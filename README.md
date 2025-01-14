@@ -59,7 +59,7 @@ I am going to use the required technologies in the following ways.
 - **React** - Used for login, displaying dinosaurs and options in the shop, provides interactivity such as feeding dinosaurs and making purchases.
 - **Service** - Retrieving what dinos the user has purchased and their info including age, happiness, and hunger, submitting new purchases of dinosaurs, food, and aesthetic options, and retrieving friends list and hyperlinks to view their enclosures.
 - **DB/Login** - Stores users, purchases, currency balance, and friends list. Login should be secure and you should not be able to use the webapp without logging in.
-- **WebSocket** - Description here
+- **WebSocket** - Send invitations to friends and accept invitations from others. View friends' enclosures.
 
 ## 🚀 AWS deliverable
 
