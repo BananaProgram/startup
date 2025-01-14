@@ -44,9 +44,11 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- A shop which will include dinosaur eggs, food, and various aesthetic options; the currency will be dinosaur scales
+- Eggs will develop more cracks over time before hatching, then the baby dinos will go through a few stages of growth before reaching adulthood
+- Adult dinos will shed scales if they are kept happy and healthy
+- Users can take care of their dinos by feeding them and playing with them
+- Users can connect with friends and view their friends' dinosaurs (maybe they can feed and play with their friends' dinosaurs too)
 
 ### Technologies
 
