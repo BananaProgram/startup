@@ -27,15 +27,6 @@ It is a sad truth that it is currently quite impossible to obtain a pet dinosaur
 
 ![Design image](mock-dino-UI.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-```mermaid
-sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
-```
-
 ### Key features
 
 - A shop which will include dinosaur eggs, food, and various aesthetic options; the currency will be dinosaur scales
@@ -51,7 +42,7 @@ I am going to use the required technologies in the following ways.
 - **HTML** - 3 HTML pages: login, dino enclosure, and shop. Hyperlinks to view friends' enclosures.
 - **CSS** - Webapp should be designed to look good on screen sizes ranging from a smartphone to a desktop computer. Color palette should be designed so that all available colors in the shop will look good together.
 - **React** - Used for login, displaying dinosaurs and options in the shop, provides interactivity such as feeding dinosaurs and making purchases.
-- **Service** - Retrieving what dinos the user has purchased and their info including age, happiness, and hunger, submitting new purchases of dinosaurs, food, and aesthetic options, and retrieving friends list and hyperlinks to view their enclosures.
+- **Service** - Retrieving what dinos the user has purchased and their info including age, happiness, and hunger, submitting new purchases of dinosaurs, food, and aesthetic options, and retrieving friends list and hyperlinks to view their enclosures. Access Colormind API for help with color palette generation.
 - **DB/Login** - Stores users, purchases, currency balance, and friends list. Login should be secure and you should not be able to use the webapp without logging in.
 - **WebSocket** - Send invitations to friends and accept invitations from others. View friends' enclosures.
 
