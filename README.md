@@ -46,7 +46,7 @@ sequenceDiagram
 
 - A shop which will include dinosaur eggs, food, and various aesthetic options; the currency will be dinosaur scales
 - Eggs will develop more cracks over time before hatching, then the baby dinos will go through a few stages of growth before reaching adulthood
-- Adult dinos will shed scales if they are kept happy and healthy
+- Adult dinos will regularly shed scales if they are kept happy and healthy
 - Users can take care of their dinos by feeding them and playing with them
 - Users can connect with friends and view their friends' dinosaurs (maybe they can feed and play with their friends' dinosaurs too)
 
@@ -56,7 +56,7 @@ I am going to use the required technologies in the following ways.
 
 - **HTML** - 3 HTML pages: login, dino enclosure, and shop. Hyperlinks to view friends' enclosures.
 - **CSS** - Webapp should be designed to look good on screen sizes ranging from a smartphone to a desktop computer. Color palette should be designed so that all available colors in the shop will look good together.
-- **React** - Description here
+- **React** - Used for login, displaying dinosaurs and options in the shop, provides interactivity such as feeding dinosaurs and making purchases.
 - **Service** - Description here
 - **DB/Login** - Description here
 - **WebSocket** - Description here
