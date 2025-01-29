@@ -50,13 +50,13 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - https://dinosaurpals.org
 
 ## 🚀 HTML deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **HTML pages** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I created 3 HTML pages - one for home/login, one for the user's dinosaur enclosure, and one for the shop.
 - [x] **Proper HTML element usage** - I did not complete this part of the deliverable.
 - [x] **Links** - I did not complete this part of the deliverable.
 - [x] **Text** - I did not complete this part of the deliverable.
