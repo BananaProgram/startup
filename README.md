@@ -62,7 +62,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Text** - I added text to the pages as appropriate, including titles, labels, and a welcome message on the homepage.
 - [x] **3rd party API placeholder** - As my API will be used to alter colors, it was difficult to integrate here, but the color of items in the shop will change, as will the background color for the main body, navigation bar, and footer.
 - [x] **Images** - Several images were added to be used as icons or visuals for purchaseable items in the shop, as well as dinosaurs for the user's enclosure. Further images will be added with a greater variety of dinosaurs in the future.
-- [x] **Login placeholder** - I did not complete this part of the deliverable.
+- [x] **Login placeholder** - I added a form with two input fields for the user to either create an account or login, as well as a logout button that takes the user back to that form.
 - [x] **DB data placeholder** - I did not complete this part of the deliverable.
 - [x] **WebSocket placeholder** - I did not complete this part of the deliverable.
 
