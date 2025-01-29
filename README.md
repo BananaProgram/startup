@@ -64,7 +64,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Images** - Several images were added to be used as icons or visuals for purchaseable items in the shop, as well as dinosaurs for the user's enclosure. Further images will be added with a greater variety of dinosaurs in the future.
 - [x] **Login placeholder** - I added a form with two input fields for the user to either create an account or login, as well as a logout button that takes the user back to that form.
 - [x] **DB data placeholder** - Sample numbers are in place for the happiness and health levels of the dinosaurs, as well as the currency and food balances of the user. 
-- [x] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **WebSocket placeholder** - I've added a search bar for users to connect with their friends through their usernames.
 
 ## 🚀 CSS deliverable
 
