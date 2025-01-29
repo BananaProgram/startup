@@ -59,7 +59,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **HTML pages** - I created 3 HTML pages - one for home/login, one for the user's dinosaur enclosure, and one for the shop.
 - [x] **Proper HTML element usage** - I used proper HTML structure for each page, including headers, footers, and navigation menus.
 - [x] **Links** - I've added links between the pages I created.
-- [x] **Text** - I did not complete this part of the deliverable.
+- [x] **Text** - I added text to the pages as appropriate, including titles, labels, and a welcome message on the homepage.
 - [x] **3rd party API placeholder** - I did not complete this part of the deliverable.
 - [x] **Images** - I did not complete this part of the deliverable.
 - [x] **Login placeholder** - I did not complete this part of the deliverable.
