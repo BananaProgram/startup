@@ -60,7 +60,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Proper HTML element usage** - I used proper HTML structure for each page, including headers, footers, and navigation menus.
 - [x] **Links** - I've added links between the pages I created.
 - [x] **Text** - I added text to the pages as appropriate, including titles, labels, and a welcome message on the homepage.
-- [x] **3rd party API placeholder** - I did not complete this part of the deliverable.
+- [x] **3rd party API placeholder** - As my API will be used to alter colors, it was difficult to integrate here, but the color of items in the shop will change, as will the background color for the main body, navigation bar, and footer.
 - [x] **Images** - I did not complete this part of the deliverable.
 - [x] **Login placeholder** - I did not complete this part of the deliverable.
 - [x] **DB data placeholder** - I did not complete this part of the deliverable.
