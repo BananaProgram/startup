@@ -1,0 +1,23 @@
+body {
+    font-family: serif;
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+header {
+    display: inline-flex;
+    background-color: lightgreen;
+    border: 20px solid black;
+    padding: none;
+    margin: none;
+}
+
+menu {
+    display: inline-flex;
+    padding: 1em;
+}
+
+nav {
+    border: none;
+}
