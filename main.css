@@ -60,9 +60,7 @@ main {
     text-align: center;
     background-color: burlywood;
     padding-bottom: 5em;
-    padding-top: 5em;
-    align-items: center;
-    justify-content: center;
+    /* padding-top: 5em; */
     line-height: 1.5em;
 }
 /*

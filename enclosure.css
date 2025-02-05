@@ -1,0 +1,49 @@
+#dino-grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+#title-menu {
+    display: inline-flex;
+    width: 100%;
+    padding-top: 1em;
+}
+
+.title-menu {
+    flex: 1;
+    justify-self: space-evenly;
+}
+
+#balances {
+    text-align: left;
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+}
+
+.balances img {
+    width: 20%;
+    align-self: center;
+    padding: 0.3em;
+}
+
+.balances {
+    border: solid black;
+    border-radius: 1.5em;
+    background-color: whitesmoke;
+    display: inline-flex;
+    align-items: center;
+    width: 20%;
+    height: 20%;
+}
+
+.balance-labels {
+    margin-left: 0.3em;
+    margin-right: 1em;
+}
+
+#find-friends {
+    text-align: right;
+    margin-right: 1em;
+}
