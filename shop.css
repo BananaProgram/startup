@@ -1,5 +1,6 @@
 #shop-items {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: auto auto auto;
     height: auto;
 }
 
@@ -21,4 +22,10 @@
     padding: 0.5em 0em;
     padding-right: 1em;
     margin: 0;
+}
+
+@media (orientation: portrait) {
+    #shop-items {
+        grid-template-columns: auto;
+    }
 }
