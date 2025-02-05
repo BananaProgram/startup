@@ -70,12 +70,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - I styled these elements in all three pages.
+- [x] **Navigation elements** - I added a different font to the menu bar and removed the default link styling.
+- [x] **Responsive to window resizing** - I set the grid layout to change on smaller screen sizes for the shop and enclosure.
+- [x] **Application elements** - I styled these elements in all three pages.
+- [x] **Application text content** - I styled the various text elements as necessary in all three pages.
+- [x] **Application images** - I scaled and styled the images in all three pages.
 
 ## 🚀 React part 1: Routing deliverable
 
