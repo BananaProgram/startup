@@ -7,10 +7,10 @@ export function Enclosure() {
         <div id="title-menu">
             <div className="title-menu" id="balances">
                 <div className="balances" id="scales">
-                    <img src="/public/dragon-scales.png"/><p className="balance-labels">123</p>
+                    <img src="/dragon-scales.png"/><p className="balance-labels">123</p>
                 </div>
                 <div className="balances" id="food">
-                    <img src="/public/food.png"/><p className="balance-labels">123</p>
+                    <img src="/food.png"/><p className="balance-labels">123</p>
                 </div>
             </div>
             <div className="title-menu">
@@ -25,7 +25,7 @@ export function Enclosure() {
             <div>
                 <h4>Type of Dinosaur</h4>
                 <div>
-                    <img src="/public/dino.png"/>
+                    <img src="/dino.png"/>
                 </div>
                 <div>
                     Health <meter min="0" max="100" value="68" ></meter>
@@ -38,7 +38,7 @@ export function Enclosure() {
             <div>
                 <h4>Type of Dinosaur</h4>
                 <div>
-                    <img src="/public/dino.png"/>
+                    <img src="/dino.png"/>
                 </div>
                 <div>
                     Health <meter min="0" max="100" value="68" ></meter>
@@ -51,7 +51,7 @@ export function Enclosure() {
             <div>
                 <h4>Type of Dinosaur</h4>
                 <div>
-                    <img src="/public/dino.png"/>
+                    <img src="/dino.png"/>
                 </div>
                 <div>
                     Health <meter min="0" max="100" value="68" ></meter>
@@ -64,7 +64,7 @@ export function Enclosure() {
             <div>
                 <h4>Type of Dinosaur</h4>
                 <div>
-                    <img src="/public/dino.png"/>
+                    <img src="/dino.png"/>
                 </div>
                 <div>
                     Health <meter min="0" max="100" value="68" ></meter>
@@ -77,7 +77,7 @@ export function Enclosure() {
             <div>
                 <h4>Type of Dinosaur</h4>
                 <div>
-                    <img src="/public/dino.png"/>
+                    <img src="/dino.png"/>
                 </div>
                 <div>
                     Health <meter min="0" max="100" value="68" ></meter>
