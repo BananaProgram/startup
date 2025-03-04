@@ -89,8 +89,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - I added functionality so the user can buy things in the shop, login properly, and the values in the enclosure such as balances and number of dinos update as necessary.
+- [x] **Hooks** - I used useState and useEffect in both the shop and enclosure components of my webapp.
 
 ## 🚀 Service deliverable
 
