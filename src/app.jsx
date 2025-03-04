@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
@@ -10,6 +10,10 @@ export default function App() {
     const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
+    const [balances, setBalances] = useState(() => {
+        const storedBalances = localStorage.getItem('balances');
+        return storedBalances ? JSON.parse(storedBalances) : { food: 100, scales: 100 };
+    });
 
     React.useEffect(() => {
         const storedUser = localStorage.getItem('userName');
@@ -20,6 +24,10 @@ export default function App() {
             setAuthState(AuthState.Unauthenticated);
         }
     }, []);
+
+    React.useEffect(() => {
+        localStorage.setItem('balances', JSON.stringify(balances));
+    }, [balances]);
 
 
     return (
@@ -67,8 +75,8 @@ export default function App() {
                         }
                         exact
                     />
-                        <Route path='/enclosure' element={<Enclosure />} />
-                        <Route path='/shop' element={<Shop />} />
+                        <Route path='/enclosure' element={<Enclosure balances={balances} setBalances={setBalances} userName={userName}/>} />
+                        <Route path='/shop' element={<Shop balances={balances} setBalances={setBalances} />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>
 

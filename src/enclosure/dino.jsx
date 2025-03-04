@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Dino({dinoType, happiness, health}) {
+export function Dino({key, dinoType, happiness, health, onFeed }) {
     return (
         <div>
                 <h4>{dinoType}</h4>
@@ -13,7 +13,7 @@ export function Dino({dinoType, happiness, health}) {
                 <div>
                     Happiness <meter min="0" max="100" value={happiness} ></meter>
                 </div>
-                <button>Feed me!</button>
+                <button onClick={onFeed}>Feed me!</button>
             </div>
     );
 }

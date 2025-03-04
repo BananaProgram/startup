@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Authenticated(props) {
+    const navigate = useNavigate();
+    
     function logout() {
         localStorage.removeItem('userName');
         props.onLogout();
@@ -9,7 +12,7 @@ export function Authenticated(props) {
     return (
         <div>
             <div className='playerName'>{props.userName}</div>
-            <button variant='primary' onClick={() => navigate('/play')}>Play</button>
+            <button variant='primary' onClick={() => navigate('/enclosure')}>Play</button>
             <button variant='secondary' onClick={() => logout()}>Logout</button>
         </div>
     );
