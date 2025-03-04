@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { Dino } from './dino';
+
 import './enclosure.css';
 
 export function Enclosure() {
-  return (
+    const [dinos, setDinos] = useState([]);
+
+    useEffect(() => {
+        const storedDinos = localStorage.getItem('dinos');
+        if (storedDinos) {
+            setDinos(JSON.parse(storedDinos));
+        } else {
+            const defaultDinos = [
+                { id: 1, name: "T-Rex", health: 90, happiness: 75 },
+            ];
+            setDinos(defaultDinos);
+            localStorage.setItem('dinos', JSON.stringify(defaultDinos));  // Save to localStorage
+        }
+    }, []);
+
+
+    return (
     <main className="container-fluid bg-secondary text-center">
         <div id="title-menu">
             <div className="title-menu" id="balances">
@@ -22,71 +41,9 @@ export function Enclosure() {
         </div>
         
         <div id="dino-grid">
-            <div>
-                <h4>Type of Dinosaur</h4>
-                <div>
-                    <img src="/dino.png"/>
-                </div>
-                <div>
-                    Health <meter min="0" max="100" value="68" ></meter>
-                </div>
-                <div>
-                    Happiness <meter min="0" max="100" value="88" ></meter>
-                </div>
-                <button>Feed me!</button>
-            </div>
-            <div>
-                <h4>Type of Dinosaur</h4>
-                <div>
-                    <img src="/dino.png"/>
-                </div>
-                <div>
-                    Health <meter min="0" max="100" value="68" ></meter>
-                </div>
-                <div>
-                    Happiness <meter min="0" max="100" value="88" ></meter>
-                </div>
-                <button>Feed me!</button>
-            </div>
-            <div>
-                <h4>Type of Dinosaur</h4>
-                <div>
-                    <img src="/dino.png"/>
-                </div>
-                <div>
-                    Health <meter min="0" max="100" value="68" ></meter>
-                </div>
-                <div>
-                    Happiness <meter min="0" max="100" value="88" ></meter>
-                </div>
-                <button>Feed me!</button>
-            </div>
-            <div>
-                <h4>Type of Dinosaur</h4>
-                <div>
-                    <img src="/dino.png"/>
-                </div>
-                <div>
-                    Health <meter min="0" max="100" value="68" ></meter>
-                </div>
-                <div>
-                    Happiness <meter min="0" max="100" value="88" ></meter>
-                </div>
-                <button>Feed me!</button>
-            </div>
-            <div>
-                <h4>Type of Dinosaur</h4>
-                <div>
-                    <img src="/dino.png"/>
-                </div>
-                <div>
-                    Health <meter min="0" max="100" value="68" ></meter>
-                </div>
-                <div>
-                    Happiness <meter min="0" max="100" value="88" ></meter>
-                </div>
-                <button>Feed me!</button>
-            </div>
+            {dinos.map((dino) => (
+                <Dino key={dino.id} dinoType={dino.name} health={dino.health} happiness={dino.happiness} />
+            ))}
         </div>
     </main>
   );
