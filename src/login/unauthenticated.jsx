@@ -14,19 +14,23 @@ export function Unauthenticated(props) {
         props.onLogin(userName);
     }
     
-    <form method="get" action="enclosure.html">
-        <div>
-            <span>Email: </span>
-            <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Email address" />
-        </div>
-        <div>
-            <span>Password: </span>
-            <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-        </div>
-        <button type="submit" onClick={() => loginUser()} disabled={!userName || !password} >Login</button>
-        <button type="submit" onClick={() => createUser()} disabled={!userName || !password} >Create Account</button>
-    </form>
+    
 
 
-    return;
+    return (
+        <div>
+            <form method="get" action="enclosure.html">
+                <div>
+                    <span>Email: </span>
+                    <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Email address" />
+                </div>
+                <div>
+                    <span>Password: </span>
+                    <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+                </div>
+                <button type="submit" onClick={() => loginUser()} disabled={!userName || !password} >Login</button>
+                <button type="submit" onClick={() => createUser()} disabled={!userName || !password} >Create Account</button>
+            </form>
+    </div>
+    );
 }

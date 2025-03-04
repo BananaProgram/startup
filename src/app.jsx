@@ -4,8 +4,24 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Shop } from './shop/shop';
 import { Enclosure } from './enclosure/enclosure';
+import { AuthState } from './login/authState';
 
 export default function App() {
+    const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+    const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = React.useState(currentAuthState);
+
+    React.useEffect(() => {
+        const storedUser = localStorage.getItem('userName');
+        if (storedUser) {
+            setUserName(storedUser);
+            setAuthState(AuthState.Authenticated);
+        } else {
+            setAuthState(AuthState.Unauthenticated);
+        }
+    }, []);
+
+
     return (
         <BrowserRouter>
             <div className="body bg-dark text-light">
@@ -14,15 +30,43 @@ export default function App() {
                         <nav>
                             <menu>
                                 <li><NavLink className='nav-link' to=''>Login</NavLink></li>
-                                <li><NavLink className='nav-link' to='enclosure'>My Enclosure</NavLink></li>
-                                <li><NavLink className='nav-link' to='shop'>Shop</NavLink></li>
+                                {authState === AuthState.Authenticated && (
+                                    <li className='nav-item'>
+                                    <NavLink className='nav-link' to='/enclosure'>My Enclosure</NavLink>
+                                    </li>
+                                )}
+                                {authState === AuthState.Authenticated && (
+                                    <li className='nav-item'>
+                                    <NavLink className='nav-link' to='/shop'>Shop</NavLink>
+                                    </li>
+                                )}
                             </menu>
                         </nav>
 
                     </header>
 
                     <Routes>
-                        <Route path='/' element={<Login />} exact />
+                    <Route
+                        path='/'
+                        element={
+                            <Login
+                                userName={userName}
+                                authState={authState}
+                                onAuthChange={(newUserName, newAuthState) => {
+                                    setAuthState(newAuthState);
+                                    setUserName(newUserName);
+                                
+                                    // Persist username if authenticated, else remove it
+                                    if (newAuthState === AuthState.Authenticated) {
+                                        localStorage.setItem('userName', newUserName);
+                                    } else {
+                                        localStorage.removeItem('userName');
+                                    }
+                                }}                                
+                            />
+                        }
+                        exact
+                    />
                         <Route path='/enclosure' element={<Enclosure />} />
                         <Route path='/shop' element={<Shop />} />
                         <Route path='*' element={<NotFound />} />
