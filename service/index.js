@@ -4,6 +4,10 @@ const express = require('express');
 const uuid = require('uuid');
 const app = express();
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'public')));
+  }
+
 const authCookieName = 'token';
 
 let users = [];
