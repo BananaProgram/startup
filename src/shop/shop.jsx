@@ -3,6 +3,8 @@ import './shop.css';
 
 export function Shop({ balances, setBalances }) {
     const [dinos, setDinos] = useState([]);
+    const [imageUrl, setImageUrl] = React.useState('data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=');
+    const [animalName, setAnimalName] = React.useState('Loading...');
 
     useEffect(() => {
         const storedDinos = localStorage.getItem('dinos');
@@ -47,6 +49,18 @@ export function Shop({ balances, setBalances }) {
         }
     }
 
+    fetch('https://extinct-api.herokuapp.com/api/v1/animal/')
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.commonName) {
+                setAnimalName(data.commonName)
+            } else {
+                setAnimalName(data.binomialName)
+            }
+
+            setImageUrl(data.imageSrc)
+        })
+
     return (
         <main className="container-fluid bg-secondary text-center">
             <div id="title-menu">
@@ -84,8 +98,8 @@ export function Shop({ balances, setBalances }) {
             </div>
             <div className='fun-fact'>
                 <h3>Extinct Animal</h3>
-                <h4>Animal Name</h4>
-                <img src='dino-egg.png' width="40%" />
+                <h4>{animalName}</h4>
+                <img src={imageUrl} width="40%" />
             </div>
         </main>
     );
