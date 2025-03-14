@@ -12,7 +12,7 @@ export default function App() {
     const [authState, setAuthState] = React.useState(currentAuthState);
     const [balances, setBalances] = useState(() => {
         const storedBalances = localStorage.getItem('balances');
-        return storedBalances ? JSON.parse(storedBalances) : { food: 100, scales: 100 };
+        return storedBalances ? JSON.parse(storedBalances) : { food: 100, scales: 1500 };
     });
 
     React.useEffect(() => {
