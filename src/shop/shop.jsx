@@ -82,6 +82,11 @@ export function Shop({ balances, setBalances }) {
                     <div className="price" onClick={() => buyFood({ price: 300, amount: 10 })} ><img src="dragon-scales.png" width="18%"/><p className="price-label">300</p></div>
                 </div>
             </div>
+            <div className='fun-fact'>
+                <h3>Extinct Animal</h3>
+                <h4>Animal Name</h4>
+                <img src='dino-egg.png' width="40%" />
+            </div>
         </main>
     );
 }
