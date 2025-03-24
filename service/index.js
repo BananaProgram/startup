@@ -22,6 +22,7 @@ var apiRouter = express.Router();
 app.use('/api', apiRouter);
 
 apiRouter.post('/auth/create', async (req, res) => {
+    const { email, password} = req.body;
     if (await findUser('email', req.body.email)) {
         res.status(409).send({ msg: 'Email already connected to a user.' });
     } else {
@@ -33,7 +34,7 @@ apiRouter.post('/auth/create', async (req, res) => {
 });
 
 apiRouter.post('/auth/login', async (req, res) => {
-    const user = findUser('email', req.email);
+    const user = await findUser('email', req.body.email);
 
     if (user) {
         if (await bcrypt.compare(req.body.password, user.password)) {
