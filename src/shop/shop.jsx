@@ -49,18 +49,26 @@ export function Shop({ balances, setBalances }) {
         }
     }
 
-    fetch('https://extinct-api.herokuapp.com/api/v1/animal/')
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.commonName) {
-                setAnimalName(data.commonName)
-            } else {
-                setAnimalName(data.binomialName)
-            }
+    React.useEffect(() => {
+        fetch('https://extinct-api.herokuapp.com/api/v1/animal/')
+            .then((response) => response.json())
+            .then((data) => {
+                const animal = data.data[0]
+                if (animal.commonName) {
+                    setAnimalName(animal.commonName)
+                } else {
+                    setAnimalName(animal.binomialName)
+                }
 
-            setImageUrl(data.imageSrc)
-        })
+                setImageUrl(animal.imageSrc)
+            })
+    }, []);
 
+    React.useEffect(() => {
+        console.log("Animal Name Updated:", animalName);
+        console.log("Image URL Updated:", imageUrl);
+    }, [animalName, imageUrl]);
+    
     return (
         <main className="container-fluid bg-secondary text-center">
             <div id="title-menu">

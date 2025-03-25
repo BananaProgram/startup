@@ -62,6 +62,7 @@ main {
     padding-bottom: 5em;
     /* padding-top: 5em; */
     line-height: 1.5em;
+    position: relative;
 }
 /*
 input[type="text"], button {
