@@ -6,8 +6,8 @@ const app = express();
 const DB = require('./database.js');
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'public')));
-  }
+  app.use(express.static(path.join(__dirname, 'public')));
+}
 
 const authCookieName = 'token';
 

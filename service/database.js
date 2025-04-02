@@ -6,12 +6,15 @@ const client = new MongoClient(url);
 const db = client.db('startup');
 const users = db.collection('user');
 
+console.log('Database module loaded');
+
 (async function testConnection() {
   try {
+    console.log(`Connecting to database at ${url}`);
     await db.command({ ping: 1 });
-    console.log(`Connect to database`);
+    console.log(`Connected to database`);
   } catch (ex) {
-    console.log(`Unable to connect to database with ${url} because ${ex.message}`);
+    console.error(`Unable to connect to database: ${ex.message}`);
     process.exit(1);
   }
 })();

@@ -34,7 +34,7 @@ ENDSSH
 
 # Step 3
 printf "\n----> Copy the distribution package to the target\n"
-scp -r -i "$key" build/* ubuntu@$hostname:services/$service
+scp -r -i "$key" build ubuntu@$hostname:services/$service
 
 # Step 4
 printf "\n----> Deploy the service on the target\n"
@@ -42,7 +42,9 @@ ssh -i "$key" ubuntu@$hostname << ENDSSH
 bash -i
 cd services/${service}
 npm install
-pm2 restart ${service}
+pm2 delete ${service} || true
+pm2 start index.js --name ${service}
+pm2 save
 ENDSSH
 
 # Step 5
