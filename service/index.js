@@ -3,14 +3,13 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const DB = require('./database.js');
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'public')));
   }
 
 const authCookieName = 'token';
-
-let users = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -22,7 +21,6 @@ var apiRouter = express.Router();
 app.use('/api', apiRouter);
 
 apiRouter.post('/auth/create', async (req, res) => {
-    const { email, password} = req.body;
     if (await findUser('email', req.body.email)) {
         res.status(409).send({ msg: 'Email already connected to a user.' });
     } else {
@@ -83,8 +81,10 @@ async function createUser(email, password) {
         email: email,
         password: passwordHash,
         token: uuid.v4(),
+        scales: 1500,
+        food: 50,
     };
-    users.push(user);
+    await DB.addUser(user);
     return user;
 }
 
@@ -93,7 +93,10 @@ async function findUser(field, value) {
         return null;
     }
 
-    return users.find((u) => u[field] === value);
+    if (field === 'token') {
+        return DB.getUserByToken(value);
+    }
+    return DB.getUser(value);
 }
 
 function setAuthCookie(res, authToken) {
