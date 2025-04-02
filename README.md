@@ -100,17 +100,17 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Static middleware for frontend** - I did complete this part of the deliverable.
 - [x] **Calls to third party endpoints** - I did complete this part of the deliverable through the extinct animal visible on the shop page.
 - [x] **Backend service endpoints** - I did complete this part of the deliverable.
-- [x] **Frontend calls service endpoints** - I not complete this part of the deliverable.
+- [x] **Frontend calls service endpoints** - I did complete this part of the deliverable.
 
 ## 🚀 DB/Login deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **User registration** - I did not complete this part of the deliverable.
-- [ ] **User login and logout** - I did not complete this part of the deliverable.
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Restricts functionality based on authentication** - I did not complete this part of the deliverable.
+- [x] **User registration** - I did complete this part of the deliverable.
+- [x] **User login and logout** - I did complete this part of the deliverable.
+- [x] **Stores data in MongoDB** - I did complete this part of the deliverable.
+- [x] **Stores credentials in MongoDB** - I did complete this part of the deliverable.
+- [x] **Restricts functionality based on authentication** - I did complete this part of the deliverable.
 
 ## 🚀 WebSocket deliverable
 
