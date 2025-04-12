@@ -45,6 +45,7 @@ export function Enclosure({ balances, setBalances, userName }) {
 
     useEffect(() => {
         const ws = new WebSocket('ws://dinosaurpals.org');
+        setSocket(ws);
         ws.onopen = () => {
           console.log('WebSocket connected');
           ws.send(JSON.stringify({ type: 'identify', email: userName }));
@@ -71,6 +72,7 @@ export function Enclosure({ balances, setBalances, userName }) {
               
                   case 'error':
                       console.error(msg.msg);
+                      setSearchError(msg.msg);
                       break;
               
                   default:
