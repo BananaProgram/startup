@@ -44,7 +44,7 @@ export function Enclosure({ balances, setBalances, userName }) {
     }, []);
 
     useEffect(() => {
-        const ws = new WebSocket('ws://dinosaurpals.org');
+        const ws = new WebSocket('wss://dinosaurpals.org');
         setSocket(ws);
         ws.onopen = () => {
           console.log('WebSocket connected');

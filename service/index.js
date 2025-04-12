@@ -119,10 +119,10 @@ function setAuthCookie(res, authToken) {
     });
   }
   
-  const ws = new WebSocket.Server({ noServer: true });
+  const wss = new WebSocket.Server({ noServer: true });
   const clients = new Map();
   
-  ws.on('connection', (ws) => {
+  wss.on('connection', (ws) => {
     let email = null;
   
     ws.on('message', (data) => {
@@ -177,8 +177,8 @@ function setAuthCookie(res, authToken) {
   });
   
   server.on('upgrade', (request, socket, head) => {
-    ws.handleUpgrade(request, socket, head, (ws) => {
-      ws.emit('connection', ws, request);
+    wss.handleUpgrade(request, socket, head, (ws) => {
+      wss.emit('connection', ws, request);
     });
   });
   
