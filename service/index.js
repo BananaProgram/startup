@@ -3,10 +3,10 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const http = require('http');
 const server = http.createServer(app);
 const DB = require('./database.js');
 const WebSocket = require('ws');
-const http = require('http');
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'public')));
