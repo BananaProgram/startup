@@ -60,7 +60,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 });
 
 apiRouter.get('/user/:email', async (req, res) => {
-  const user = await DB.findUserByEmail(req.params.email);
+  const user = await DB.getUser(req.params.email);
   if (user) {
     res.send({ email: user.email });
   } else {
