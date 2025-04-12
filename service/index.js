@@ -3,7 +3,10 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
+const server = http.createServer(app);
 const DB = require('./database.js');
+const WebSocket = require('ws');
+const http = require('http');
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'public')));
@@ -54,6 +57,15 @@ apiRouter.delete('/auth/logout', async (req, res) => {
     }
     res.clearCookie(authCookieName);
     res.status(204).end();
+});
+
+apiRouter.get('/user/:email', async (req, res) => {
+  const user = await DB.findUserByEmail(req.params.email);
+  if (user) {
+    res.send({ email: user.email });
+  } else {
+    res.status(404).send({ msg: 'User not found' });
+  }
 });
 
 
@@ -107,6 +119,69 @@ function setAuthCookie(res, authToken) {
     });
   }
   
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+  const wss = new WebSocket.Server({ noServer: true });
+  const clients = new Map();
+  
+  wss.on('connection', (ws) => {
+    let email = null;
+  
+    ws.on('message', (data) => {
+      const msg = JSON.parse(data);
+      const { type, target } = msg;
+  
+      if (type === 'identify') {
+        email = msg.email;
+        clients.set(email, ws);
+        console.log(`${email} connected`);
+        return;
+      }
+  
+      if (!email) {
+        ws.send(JSON.stringify({ type: 'error', msg: 'You must identify first.' }));
+        return;
+      }
+  
+      if (type === 'view-enclosure') {
+        const targetWs = clients.get(target);
+        if (targetWs) {
+          targetWs.send(JSON.stringify({
+            type: 'request-enclosure',
+            from: email,
+          }));
+        } else {
+          ws.send(JSON.stringify({
+            type: 'error',
+            msg: `User ${target} is not online.`,
+          }));
+        }
+      }
+  
+      if (type === 'enclosure-data') {
+        const to = msg.to;
+        const targetWs = clients.get(to);
+        if (targetWs) {
+          targetWs.send(JSON.stringify({
+            type: 'enclosure-data',
+            data: msg.data,
+          }));
+        }
+      }
+    });
+  
+    ws.on('close', () => {
+      if (email) {
+        clients.delete(email);
+        console.log(`${email} disconnected`);
+      }
+    });
+  });
+  
+  server.on('upgrade', (request, socket, head) => {
+    wss.handleUpgrade(request, socket, head, (ws) => {
+      wss.emit('connection', ws, request);
+    });
+  });
+  
+  server.listen(port, () => {
+    console.log(`HTTP + WebSocket server listening on port ${port}`);
   });
