@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { Dino } from './dino';
 
@@ -12,6 +12,7 @@ export function Enclosure({ balances, setBalances, userName }) {
     const [searchResults, setSearchResults] = useState([]);
     const [viewingEnclosure, setViewingEnclosure] = useState(null);
     const [viewingFriendEmail, setViewingFriendEmail] = useState(null);
+    const dinosRef = useRef([]);
 
     const feedDino = ({id}) => {
         if (balances.food > 0) {
@@ -29,6 +30,10 @@ export function Enclosure({ balances, setBalances, userName }) {
             alert("Not enough food!");
         }
     };
+
+    useEffect(() => {
+        dinosRef.current = dinos;
+    }, [dinos]);
 
     useEffect(() => {
         const storedDinos = localStorage.getItem('dinos');
@@ -52,34 +57,34 @@ export function Enclosure({ balances, setBalances, userName }) {
         };
       
         ws.onmessage = (event) => {
-          const msg = JSON.parse(event.data);
-          
-          function handleSocketMessage(msg) {
-              switch (msg.type) {
-                  case 'request-enclosure':
-                      // Friend is asking for your enclosure data
-                      ws.send(JSON.stringify({
-                      type: 'enclosure-data',
-                      to: msg.from,
-                      data: { dinosaurs: dinos },
-                      }));
-                      break;
-      
-                  case 'enclosure-data':
-                      console.log('Got friend enclosure:', msg.data);
-                      setViewingEnclosure(msg.data); // Set it in state so we render it
-                      break;              
-              
-                  case 'error':
-                      console.error(msg.msg);
-                      setSearchError(msg.msg);
-                      break;
-              
-                  default:
-                      console.log('Unknown message:', msg);
-              }
-            }      
-          handleSocketMessage(msg);
+            const msg = JSON.parse(event.data);
+            
+            function handleSocketMessage(msg) {
+                switch (msg.type) {
+                    case 'request-enclosure':
+                        // Friend is asking for your enclosure data
+                        ws.send(JSON.stringify({
+                            type: 'enclosure-data',
+                            to: msg.from,
+                            data: { dinosaurs: dinosRef.current },
+                        }));
+                        break;
+        
+                    case 'enclosure-data':
+                        console.log('Got friend enclosure:', msg.data);
+                        setViewingEnclosure(msg.data); // Set it in state so we render it
+                        break;              
+                
+                    case 'error':
+                        console.error(msg.msg);
+                        setSearchError(msg.msg);
+                        break;
+                
+                    default:
+                        console.log('Unknown message:', msg);
+                }
+                }      
+            handleSocketMessage(msg);
         };
             
         return () => ws.close();
