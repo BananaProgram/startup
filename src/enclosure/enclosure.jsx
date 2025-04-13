@@ -44,7 +44,7 @@ export function Enclosure({ balances, setBalances, userName }) {
     }, []);
 
     useEffect(() => {
-        const ws = new WebSocket('wss://dinosaurpals.org');
+        const ws = new WebSocket(`wss://${window.location.hostname}`);
         setSocket(ws);
         ws.onopen = () => {
           console.log('WebSocket connected');
@@ -145,13 +145,13 @@ export function Enclosure({ balances, setBalances, userName }) {
                 {searchResults.length > 0 && (
                 <div className="search-results">
                     {searchResults.map((user, index) => (
-                    <div
+                        <button
                         key={index}
                         className="search-result"
                         onClick={() => viewFriendEnclosure(user.email)}
-                    >
+                        >
                         {user.email}
-                    </div>
+                        </button>
                     ))}
                 </div>
                 )}
