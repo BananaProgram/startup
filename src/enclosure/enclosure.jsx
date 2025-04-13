@@ -4,7 +4,7 @@ import { Dino } from './dino';
 
 import './enclosure.css';
 
-export function Enclosure({ balances, setBalances, userName }) {
+export function Enclosure({ balances, setBalances, userName, dinos: initialDinos }) {
     const [dinos, setDinos] = useState([]);
     const [socket, setSocket] = useState(null);
     const [searchInput, setSearchInput] = useState('');
@@ -13,6 +13,7 @@ export function Enclosure({ balances, setBalances, userName }) {
     const [viewingEnclosure, setViewingEnclosure] = useState(null);
     const [viewingFriendEmail, setViewingFriendEmail] = useState(null);
     const dinosRef = useRef([]);
+    const balancesRef = useRef([]);
 
     const feedDino = ({id}) => {
         if (balances.food > 0) {
@@ -25,7 +26,6 @@ export function Enclosure({ balances, setBalances, userName }) {
                     dino.id === id ? {...dino, health: dino.health + 5} : dino
                 )
             );
-            localStorage.setItem('dinos', JSON.stringify(dinos));
         } else {
             alert("Not enough food!");
         }
@@ -36,17 +36,51 @@ export function Enclosure({ balances, setBalances, userName }) {
     }, [dinos]);
 
     useEffect(() => {
-        const storedDinos = localStorage.getItem('dinos');
-        if (storedDinos) {
-            setDinos(JSON.parse(storedDinos));
+        balancesRef.current = balances;
+    }, [balances]);
+
+    useEffect(() => {
+        if (initialDinos && initialDinos.length > 0) {
+            setDinos(initialDinos);
         } else {
-            const defaultDinos = [
-                { id: 1, name: "T-Rex", health: 90, happiness: 75 },
-            ];
-            setDinos(defaultDinos);
-            localStorage.setItem('dinos', JSON.stringify(defaultDinos));  // Save to localStorage
+            const storedDinos = localStorage.getItem('dinos');
+            if (storedDinos) {
+                setDinos(JSON.parse(storedDinos));
+            } else {
+                const defaultDinos = [
+                    { id: 1, name: "T-Rex", health: 90, happiness: 75 },
+                ];
+                setDinos(defaultDinos);
+                localStorage.setItem('dinos', JSON.stringify(defaultDinos));  // Save to localStorage
+            }
         }
     }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          // Gain 1 scale per dino per minute
+          const earned = dinos.length;
+          setBalances(prev => ({
+            ...prev,
+            scales: prev.scales + earned,
+          }));
+      
+          // Decrease health slightly
+          setDinos(prev =>
+            prev.map(dino => ({
+              ...dino,
+              health: Math.max(dino.health - 0.2, 0),
+            }))
+          );
+        }, 60000); // every 60 seconds
+      
+        return () => clearInterval(interval);
+      }, [dinos.length]);
+      
+
+    useEffect(() => {
+        localStorage.setItem('dinos', JSON.stringify(dinos));
+    }, [dinos]);
 
     useEffect(() => {
         const ws = new WebSocket(`wss://${window.location.hostname}`);
@@ -88,6 +122,31 @@ export function Enclosure({ balances, setBalances, userName }) {
         };
             
         return () => ws.close();
+      }, []);
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+          const saveData = async () => {
+            try {
+              await fetch('/api/user/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include', // ensures cookie token is sent
+                body: JSON.stringify({
+                    dinos: dinosRef.current,
+                    balances: balancesRef.current,
+                }),
+              });
+              console.log('Auto-save successful');
+            } catch (err) {
+              console.error('Auto-save failed:', err);
+            }
+          };
+      
+          saveData();
+        }, 10 * 60 * 1000); // 10 minutes
+      
+        return () => clearInterval(interval); // cleanup if component unmounts
       }, []);
 
     async function searchFriend(email) {

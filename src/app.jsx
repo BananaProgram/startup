@@ -14,6 +14,7 @@ export default function App() {
         const storedBalances = localStorage.getItem('balances');
         return storedBalances ? JSON.parse(storedBalances) : { food: 100, scales: 1500 };
     });
+    const [dinos, setDinos] = useState([]);
 
     React.useEffect(() => {
         const storedUser = localStorage.getItem('userName');
@@ -60,22 +61,33 @@ export default function App() {
                             <Login
                                 userName={userName}
                                 authState={authState}
-                                onAuthChange={(newUserName, newAuthState) => {
+                                onAuthChange={(newUserName, newAuthState, updatedData) => {
                                     setAuthState(newAuthState);
                                     setUserName(newUserName);
                                 
-                                    // Persist username if authenticated, else remove it
+                                    if (updatedData) {
+                                        setBalances(updatedData.balances);
+                                        setDinos(updatedData.dinos);
+                                    }
+                                
                                     if (newAuthState === AuthState.Authenticated) {
                                         localStorage.setItem('userName', newUserName);
                                     } else {
                                         localStorage.removeItem('userName');
                                     }
-                                }}                                
+                                }}                            
                             />
                         }
                         exact
                     />
-                        <Route path='/enclosure' element={<Enclosure balances={balances} setBalances={setBalances} userName={userName}/>} />
+                        <Route path='/enclosure' element={<Enclosure
+                                                            userName={userName}
+                                                            balances={balances}
+                                                            setBalances={setBalances}
+                                                            dinos={dinos}
+                                                            setDinos={setDinos}
+                                                            />
+                                                        } />
                         <Route path='/shop' element={<Shop balances={balances} setBalances={setBalances} />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>

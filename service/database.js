@@ -31,9 +31,18 @@ async function addUser(user) {
   await users.insertOne(user);
 }
 
+async function updateUser(user) {
+  await users.updateOne({ email: user.email }, { $set: user });
+}
+
+async function updateLastLogin(email, date) {
+  await users.updateOne({ email }, { $set: { lastLogin: date } });
+}
 
 module.exports = {
   getUser,
   getUserByToken,
-  addUser
+  addUser,
+  updateUser,
+  updateLastLogin
 };

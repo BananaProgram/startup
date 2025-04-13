@@ -23,6 +23,15 @@ app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use('/api', apiRouter);
 
+const verifyAuth = async (req, res, next) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  if (user) {
+    next();
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+};
+
 apiRouter.post('/auth/create', async (req, res) => {
     if (await findUser('email', req.body.email)) {
         res.status(409).send({ msg: 'Email already connected to a user.' });
@@ -41,13 +50,65 @@ apiRouter.post('/auth/login', async (req, res) => {
         if (await bcrypt.compare(req.body.password, user.password)) {
             user.token = uuid.v4();
             setAuthCookie(res, user.token);
-            res.send({ email: user.email });
+
+            const now = new Date();
+            const lastLogin = new Date(user.lastLogin || now);
+            const minutesOffline = Math.floor((now - lastLogin) / (1000 * 60));
+
+            const updatedDinos = user.dinos.map(dino => {
+              const scalesGained = minutesOffline * 1; // 1 scale/minute
+              const healthLost = minutesOffline * 0.2;  // 0.2 health/minute
+
+              return {
+                ...dino,
+                health: Math.max(dino.health - healthLost, 0),
+              };
+            });
+
+            const totalScalesGained = minutesOffline * updatedDinos.length;
+
+            if (!user.balances) {
+              user.balances = {
+                food: user.food || 100,
+                scales: user.scales || 1500,
+              };
+              delete user.scales;
+              delete user.food;
+            }
+            if (!user.dinos) user.dinos = [{ id: 1, name: 'T-Rex', health: 90, happiness: 75 }];
+            if (!user.lastLogin) user.lastLogin = new Date();
+
+            // Update balances and dinos
+            user.balances.scales += totalScalesGained;
+            user.dinos = updatedDinos;
+            user.lastLogin = now;
+
+            await DB.updateUser(user);
+            res.send({
+              email: user.email,
+              balances: user.balances,
+              dinos: user.dinos,
+            });
             return;
         }
         res.status(401).send({ msg: 'Incorrect password.' });
     }
     res.status(401).send({ msg: 'No account is associated with this email.' });
 });
+
+apiRouter.post('/user/save', verifyAuth, async (req, res) => {
+  const user = await findUser('token', req.cookies[authCookieName]);
+  if (user) {
+    user.dinos = req.body.dinos;
+    user.balances = req.body.balances;
+    user.lastLogin = new Date();
+    await DB.updateUser(user);
+    res.status(200).send({ msg: 'Saved successfully' });
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
 
 apiRouter.delete('/auth/logout', async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName])
@@ -62,21 +123,15 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 apiRouter.get('/user/:email', async (req, res) => {
   const user = await DB.getUser(req.params.email);
   if (user) {
-    res.send({ email: user.email });
+    res.send({
+      email: user.email,
+      balances: user.balances,
+      dinos: user.dinos
+    });
   } else {
     res.status(404).send({ msg: 'User not found' });
   }
 });
-
-
-const verifyAuth = async (req, res, next) => {
-    const user = await findUser('token', req.cookies[authCookieName]);
-    if (user) {
-      next();
-    } else {
-      res.status(401).send({ msg: 'Unauthorized' });
-    }
-  };
 
 app.use(function (err, req, res, next) {
     res.status(500).send({ type: err.name, message: err.message });
@@ -95,6 +150,7 @@ async function createUser(email, password) {
         token: uuid.v4(),
         scales: 1500,
         food: 50,
+        lastLogin: new Date(),
     };
     await DB.addUser(user);
     return user;

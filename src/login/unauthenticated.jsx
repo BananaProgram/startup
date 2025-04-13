@@ -3,6 +3,7 @@ import React from 'react';
 export function Unauthenticated(props) {
     const [userName, setUserName] = React.useState(props.userName);
     const [password, setPassword] = React.useState('');
+    const [error, setError] = React.useState('');
 
     async function loginUser() {
         loginOrCreate('/api/auth/login');
@@ -21,17 +22,21 @@ export function Unauthenticated(props) {
           },
         });
         if (response?.status === 200) {
+          const user = await response.json();
           localStorage.setItem('userName', userName);
-          props.onLogin(userName);
+          props.onLogin(user.email, {
+            balances: user.balances,
+            dinos: user.dinos
+          });
         } else {
           const body = await response.json();
-          setDisplayError('⚠ Error: ${body.msg}');
+          setError(`⚠ Error: ${body.msg}`);
         }
     }
 
     return (
         <div>
-            <form method="get" action="enclosure.html">
+            <form>
                 <div>
                     <span>Email: </span>
                     <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Email address" />
