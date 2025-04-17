@@ -58,14 +58,18 @@ export function Enclosure({ balances, setBalances, userName, dinos: initialDinos
 
     useEffect(() => {
         const interval = setInterval(() => {
-          // Gain 1 scale per dino per minute
+          if (!dinos || !Array.isArray(dinos)) return;
+    
           const earned = dinos.length;
-          setBalances(prev => ({
-            ...prev,
-            scales: prev.scales + earned,
-          }));
-      
-          // Decrease health slightly
+    
+          setBalances(prev => {
+            if (!prev || typeof prev.scales !== 'number') return prev;
+            return {
+              ...prev,
+              scales: prev.scales + earned,
+            };
+          });
+    
           setDinos(prev =>
             prev.map(dino => ({
               ...dino,
@@ -73,9 +77,10 @@ export function Enclosure({ balances, setBalances, userName, dinos: initialDinos
             }))
           );
         }, 60000); // every 60 seconds
-      
+    
         return () => clearInterval(interval);
-      }, [dinos.length]);
+    }, [dinos]);
+    
       
 
     useEffect(() => {
@@ -83,7 +88,11 @@ export function Enclosure({ balances, setBalances, userName, dinos: initialDinos
     }, [dinos]);
 
     useEffect(() => {
-        const ws = new WebSocket(`wss://${window.location.hostname}`);
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const port = window.location.protocol === 'https:' ? '' : ':4000';
+        const ws = new WebSocket(`${protocol}://${window.location.hostname}${port}`);
+
+
         setSocket(ws);
         ws.onopen = () => {
           console.log('WebSocket connected');
@@ -176,6 +185,10 @@ export function Enclosure({ balances, setBalances, userName, dinos: initialDinos
             type: 'view-enclosure',
             target: friendEmail,
         }));
+    }
+
+    if (!balances) {
+        return <main className="container-fluid bg-secondary text-center">Loading...</main>;
     }
 
     return (

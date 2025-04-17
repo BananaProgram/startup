@@ -23,6 +23,7 @@ export function Unauthenticated(props) {
         });
         if (response?.status === 200) {
           const user = await response.json();
+          console.log("Login Response:", user);
           localStorage.setItem('userName', userName);
           props.onLogin(user.email, {
             balances: user.balances,

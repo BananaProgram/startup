@@ -10,10 +10,23 @@ export default function App() {
     const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
-    const [balances, setBalances] = useState(() => {
-        const storedBalances = localStorage.getItem('balances');
-        return storedBalances ? JSON.parse(storedBalances) : { food: 100, scales: 1500 };
-    });
+    // Compute the initial balances first
+    let initialBalances;
+    try {
+    const storedBalancesRaw = localStorage.getItem('balances');
+    const parsed = JSON.parse(storedBalancesRaw);
+    if (parsed && typeof parsed === 'object') {
+        initialBalances = parsed;
+    } else {
+        initialBalances = { food: 100, scales: 1500 };
+    }
+    } catch {
+    initialBalances = { food: 100, scales: 1500 };
+    }
+
+    // Then call useState ONCE
+    const [balances, setBalances] = useState(initialBalances);
+
     const [dinos, setDinos] = useState([]);
 
     React.useEffect(() => {
@@ -62,6 +75,7 @@ export default function App() {
                                 userName={userName}
                                 authState={authState}
                                 onAuthChange={(newUserName, newAuthState, updatedData) => {
+                                    console.log("updatedData", updatedData)
                                     setAuthState(newAuthState);
                                     setUserName(newUserName);
                                 

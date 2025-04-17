@@ -39,7 +39,11 @@ apiRouter.post('/auth/create', async (req, res) => {
         const user = await createUser(req.body.email, req.body.password);
 
         setAuthCookie(res, user.token);
-        res.send({ email: user.email })
+        res.send({
+          email: user.email,
+          balances: user.balances,
+          dinos: user.dinos,
+        });
     }
 });
 
@@ -55,6 +59,10 @@ apiRouter.post('/auth/login', async (req, res) => {
             const lastLogin = new Date(user.lastLogin || now);
             const minutesOffline = Math.floor((now - lastLogin) / (1000 * 60));
 
+            if (!user.dinos) {
+              user.dinos = [{ id: 1, name: 'T-Rex', health: 90, happiness: 75 }];
+            }
+
             const updatedDinos = user.dinos.map(dino => {
               const scalesGained = minutesOffline * 1; // 1 scale/minute
               const healthLost = minutesOffline * 0.2;  // 0.2 health/minute
@@ -67,14 +75,11 @@ apiRouter.post('/auth/login', async (req, res) => {
 
             const totalScalesGained = minutesOffline * updatedDinos.length;
 
-            if (!user.balances) {
-              user.balances = {
-                food: user.food || 100,
-                scales: user.scales || 1500,
-              };
-              delete user.scales;
-              delete user.food;
+            user.balances = {
+              food: (user.balances?.food ?? user.food ?? 100),
+              scales: (user.balances?.scales ?? user.scales ?? 1500),
             }
+            
             if (!user.dinos) user.dinos = [{ id: 1, name: 'T-Rex', health: 90, happiness: 75 }];
             if (!user.lastLogin) user.lastLogin = new Date();
 
@@ -148,8 +153,8 @@ async function createUser(email, password) {
         email: email,
         password: passwordHash,
         token: uuid.v4(),
-        scales: 1500,
-        food: 50,
+        balances: { food: 100, scales: 1500 },
+        dinos: [{ id: 1, name: 'T-Rex', health: 90, happiness: 75 }],
         lastLogin: new Date(),
     };
     await DB.addUser(user);
